@@ -22,22 +22,23 @@ class MthAmort:
 
 def payment_size(principal, rate, total_payments):
 	p = principal
-	r = rate
+	r = rate/12/100
 	n = total_payments
 
-	pmt = r * p / (1 - (1 + r))
+	pmt = r * p / (1 - (1 + r)**-n)
+	return pmt
 
 
-def interest_size(remaining_balance, payment, rate):
-	pass
-
+def interest_size(remaining_balance, rate):
+	interest = remaining_balance * rate
+	return interest
 
 def principal_paydown(remaining_balance, payment, rate):
-	pass
+	paydown = payment - (remaining_balance * rate)
 
 
-def recalc_principal(remaining_balance, payment):
-	pass
+def recalc_principal(remaining_balance, rate):
+	principal = remaining_balance - principal_paydown(remaining_balance, payment, rate)
 
 def recalc_cum_prin():
 	pass
