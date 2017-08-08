@@ -9,10 +9,12 @@ class Controller:
 	def calc_schedule(self, mortgage):
 		
 		amort = MthAmort(mortgage)
-		
+		print('Monthly Payment ', amort.pmt)
+
+		#schedule = {}
 		for mth in range(1, mortgage.term*12 + 1):
 			monthly_numbers = amort.calc_period(mth)
-
+			#schedule['mth'] = monthly_numbers
 		
 			self.view.print_amort(monthly_numbers)
 
