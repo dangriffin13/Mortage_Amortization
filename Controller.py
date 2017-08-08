@@ -1,12 +1,17 @@
 from model.mortgage_models import MthAmort, Mortgage
-
+from view import View
 
 class Controller:
 	def __init__(self):
 		self.view = View()
 		self.mortgage = None
 
+	def calc_schedule(mortgage):
+		for mth in range(mortgage.term*12)
+		amort = MthAmort()
 
+		for period in amort:
+			self.view.print_amort(period)
 
 
 
