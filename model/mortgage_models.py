@@ -1,4 +1,11 @@
 
+class Mortgage:
+	def __init__(self, principal, rate, term):
+		self.principal = principal
+		self.rate = rate
+		self.term = term
+
+
 class MthAmort:
 	def __init__(self,
 				payment_period, 
