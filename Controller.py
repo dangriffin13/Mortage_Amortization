@@ -1,17 +1,20 @@
 from model.mortgage_models import MthAmort, Mortgage
-from view import View
+from views import View
 
 class Controller:
 	def __init__(self):
 		self.view = View()
-		self.mortgage = None
+		#self.mortgage = None
 
 	def calc_schedule(mortgage):
-		for mth in range(mortgage.term*12)
-		amort = MthAmort()
+		
+		amort = MthAmort(mortgage)
+		
+		for mth in range(1, mortgage.term*12 + 1):
+			monthly_numbers = amort.calc_period(mth)
 
-		for period in amort:
-			self.view.print_amort(period)
+		
+			self.view.print_amort(monthly_numbers)
 
 
 
@@ -19,13 +22,14 @@ class Controller:
 def main():
 	
 	print("Let's calculate your mortgage amortization")
-	principal = input("What's the principal amount of the loan?")
-	rate = input("What's the annual interest rate of your loan?")
-	term = input("What's the term, in years, of your loan?")
+	principal = input("What's the principal amount of the loan? ")
+	rate = input("What's the annual interest rate of your loan? ")
+	term = input("What's the term, in years, of your loan? ")
 
 	
 	controller = Controller()
-	controller.mortgage = Mortgage(principal, rate, term)
+	
+	controller.calc_schedule(Mortgage(principal, rate, term))
 
 
 
