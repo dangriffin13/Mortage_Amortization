@@ -6,7 +6,7 @@ class Controller:
 		self.view = View()
 		#self.mortgage = None
 
-	def calc_schedule(mortgage):
+	def calc_schedule(self, mortgage):
 		
 		amort = MthAmort(mortgage)
 		
