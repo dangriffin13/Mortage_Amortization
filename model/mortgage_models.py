@@ -5,6 +5,15 @@ class Mortgage:
 		self.rate = float(rate)
 		self.term = int(term)
 
+	def calc_schedule(self):
+		
+		amort = MthAmort(self)
+
+		for mth in range(1, self.term*12 + 1):
+			amort.calc_period(mth)
+
+		return amort
+
 
 class MthAmort:
 	def __init__(self, mortgage): #a mortgage object is passed in
@@ -19,14 +28,17 @@ class MthAmort:
 		self.monthly_numbers = {}
 
 	def calc_period(self, period):
-		self.monthly_numbers['Month'] = period
-		self.monthly_numbers['Principal Payment'] = self.principal_paydown()
-		self.monthly_numbers['Interest Payment'] = self.interest_size()
-		self.monthly_numbers['Cumulative Principal Payments'] = self.recalc_cum_prin()
-		self.monthly_numbers['Cumulative Interest Payments'] = self.recalc_cum_int()
-		self.monthly_numbers['Cumulative Total Payments'] = self.recalc_cum_pmt()
-		self.monthly_numbers['Remaining Balance'] = self.recalc_principal()
-		return self.monthly_numbers
+		self.monthly_numbers[period] = {
+		'Month' : period,
+		'Principal Payment': self.principal_paydown(),
+		'Interest Payment': self.interest_size(),
+		'Cumulative Principal Payments': self.recalc_cum_prin(),
+		'Cumulative Interest Payments': self.recalc_cum_int(),
+		'Cumulative Total Payments' : self.recalc_cum_pmt(),
+		'Remaining Balance' : self.recalc_principal()
+		}
+		
+		return self.monthly_numbers[period]
 
 	def interest_size(self):
 		interest = self.bal * self.rate
@@ -36,21 +48,21 @@ class MthAmort:
 		paydown = self.pmt - (self.bal * self.rate)	
 		return paydown
 
-	def recalc_principal(self):
-		self.bal -= self.bal - principal_paydown(self.bal, self.pmt, self.rate)
-		return self.bal
-
 	def recalc_cum_prin(self):
-		self.prin_cum += principal_paydown(self.bal, self.pmt, self.rate)
+		self.prin_cum += self.principal_paydown() # += self.monthly_numbers['Prinicpal Payment']
 		return self.prin_cum
 
 	def recalc_cum_int(self):
-		self.int_cum += interest_size(self.bal, self.rate)
+		self.int_cum += self.interest_size() # += self.monthly_numbers['Interest Payment']
 		return self.int_cum
 
 	def recalc_cum_pmt(self):
-		self.pmt_cum += self.bal * self.rate
+		self.pmt_cum += self.pmt
 		return self.pmt_cum
+
+	def recalc_principal(self):
+		self.bal -= self.principal_paydown()
+		return self.bal
 
 
 def payment_size(principal, rate, total_payments):
