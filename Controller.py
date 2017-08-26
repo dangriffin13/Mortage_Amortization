@@ -1,5 +1,7 @@
 from model.mortgage_models import MthAmort, Mortgage
 from views import View
+import matplotlib.pyplot as plt
+
 
 class Controller:
 	def __init__(self):
@@ -36,12 +38,29 @@ def main():
 	mortgage = Mortgage(*controller.gather_inputs())
 	amort = mortgage.calc_schedule()
 
-	for mth in amort.monthly_numbers:
-		print(amort.monthly_numbers[mth])
+	#for mth in amort.monthly_numbers:
+		#print(amort.monthly_numbers[mth])
 
 	#using View
 	#for key in amort.monthly_numbers:
 		#self.view.print_amort(monthly_numbers)
+
+	#matplotlib pyplot practice	
+	mths = sorted(amort.monthly_numbers)
+
+	plt.plot(mths, [amort.monthly_numbers[mth]['Remaining Balance'] for mth in mths], 'g--',
+			 mths, [amort.monthly_numbers[mth]['Cumulative Principal Payments'] for mth in mths], 'y--',
+			 mths, [amort.monthly_numbers[mth]['Cumulative Interest Payments'] for mth in mths], 'r--',
+			 mths, [amort.monthly_numbers[mth]['Cumulative Total Payments'] for mth in mths], 'k--'
+			 )
+	
+	plt.ylabel('Remaining Balance')
+	plt.xlabel('Payment Month')
+
+	plt.show()
+
+
+
 	
 
 
