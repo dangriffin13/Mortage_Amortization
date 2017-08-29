@@ -48,13 +48,15 @@ def main():
 	#matplotlib pyplot practice	
 	mths = sorted(amort.monthly_numbers)
 
-	plt.plot(mths, [amort.monthly_numbers[mth]['Remaining Balance'] for mth in mths], 'g--',
-			 mths, [amort.monthly_numbers[mth]['Cumulative Principal Payments'] for mth in mths], 'y--',
-			 mths, [amort.monthly_numbers[mth]['Cumulative Interest Payments'] for mth in mths], 'r--',
+	plt.plot(mths, [amort.monthly_numbers[mth]['Remaining Balance'] for mth in mths], 'g--', 
+			 mths, [amort.monthly_numbers[mth]['Cumulative Principal Payments'] for mth in mths], 'y--', 
+			 mths, [amort.monthly_numbers[mth]['Cumulative Interest Payments'] for mth in mths], 'r--', 
 			 mths, [amort.monthly_numbers[mth]['Cumulative Total Payments'] for mth in mths], 'k--'
 			 )
 	
-	plt.ylabel('Remaining Balance')
+	plt.legend(['Remaining Balance','Cumulative Principal Payments','Cumulative Interest Payments','Cumulative Total Payments'],
+			   loc='upper center')
+
 	plt.xlabel('Payment Month')
 
 	plt.show()
